@@ -43,11 +43,12 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 apt-get install irssi
 echo 'issi installed'
 
-# TODO: install skype, filezilla, imagemagick, chrome, mysqlworkbench, mercurial
-#   vlc media player, wine, nodejs
-
 # install antivirus
 apt-get install clamav
 freshclam
 clamscan
 echo 'clam antivirus installed'
+
+# TODO: install skype, filezilla, imagemagick, chrome, mysqlworkbench, mercurial
+#   vlc media player, wine, nodejs
+
