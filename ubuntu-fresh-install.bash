@@ -23,6 +23,11 @@ vundle # install plugin manager for vim
 mkdir ~/.vim/undo
 mkdir ~/.vim/swap
 
+# install silver search for vim plugin
+apt-get install silversearcher-ag
+
+# TODO: install python and compile for autocomplete
+
 # tmux 2.0
 apt-get install -y python-software-properties software-properties-common
 add-apt-repository -y ppa:pi-rho/dev
@@ -33,3 +38,16 @@ echo 'tmux 2.0 installed'
 # install tmux plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # tmux source ~/.tmux.conf
+
+# install irc chat for tmux
+apt-get install irssi
+echo 'issi installed'
+
+# TODO: install skype, filezilla, imagemagick, chrome, mysqlworkbench, mercurial
+#   vlc media player, wine, nodejs
+
+# install antivirus
+apt-get install clamav
+freshclam
+clamscan
+echo 'clam antivirus installed'
