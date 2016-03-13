@@ -47,11 +47,11 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # tmux source ~/.tmux.conf
 
 # install irc chat for tmux
-apt-get install irssi
+apt-get install irssi -y
 echo 'issi installed'
 
 # install antivirus
-apt-get install clamav
+apt-get install clamav -y
 freshclam
 clamscan
 echo 'clam antivirus installed'
@@ -59,7 +59,7 @@ echo 'clam antivirus installed'
 # TODO: install skype, filezilla, imagemagick, chrome, mysqlworkbench, mercurial
 #   vlc media player, wine, nodejs
 
-apt-get install xclip
+apt-get install xclip -y
 
 # install RVM
 # key to verify the installed version
@@ -68,5 +68,8 @@ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB8
 \curl -sSL https://get.rvm.io | bash -s stable --ruby
 
 # mysql
-apt-get install mysql-client-5.6
-apt-get install mysql-server-5.6
+apt-get install mysql-client-5.6 -y
+apt-get install mysql-server-5.6 -y
+
+# node js
+apt-get install nodejs -y
