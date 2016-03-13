@@ -2,6 +2,13 @@
 apt-get update  # To get the latest package lists
 apt-get upgrade  # To get the latest package lists
 
+#TODO: check if dotfiles exitst
+#TODO: check all the dependencies
+#TODO: select what to install?
+#TODO: remember to display messages of confirmation
+#TODO: make zsh the defaul shell
+
+
 # install console fonts
 curl https://gist.githubusercontent.com/lucasdavila/3875946/raw/1c100cae16a06bef154af0f290d665405b554b3b/install_source_code_pro.sh | sh 
 echo "console font installed"
@@ -52,3 +59,10 @@ echo 'clam antivirus installed'
 # TODO: install skype, filezilla, imagemagick, chrome, mysqlworkbench, mercurial
 #   vlc media player, wine, nodejs
 
+apt-get install xclip
+
+# install RVM
+# key to verify the installed version
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+
+\curl -sSL https://get.rvm.io | bash -s stable --ruby
