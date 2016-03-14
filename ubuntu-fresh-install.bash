@@ -68,8 +68,12 @@ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB8
 \curl -sSL https://get.rvm.io | bash -s stable --ruby
 
 # mysql
-apt-get install mysql-client-5.6 -y
-apt-get install mysql-server-5.6 -y
+apt-get install mysql-client -y
 
+# workbench
+apt-get install mysql-workbench
 # node js
 apt-get install nodejs -y
+
+# apache
+apt-get install apache2 -y
