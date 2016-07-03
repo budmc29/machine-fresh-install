@@ -1,11 +1,20 @@
-# Install base programs on a new ubuntu machine
+# Install needed programs on a ubuntu 14.04 machine
 
 Usage:
 ```
-sudo bash ./ubuntu-fresh-install.bash
+sudo ./ubuntu-fresh-install.bash
 ```
-after the istall run this command for vim:
+after the install run this command:
 ```
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 ```
-# Ubuntu fresh install
+open vim and:
+```
+:PluginInstall
+```
+
+open tmux and:
+```
+<prefix>I
+```
+

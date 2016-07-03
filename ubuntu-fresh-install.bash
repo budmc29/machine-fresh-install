@@ -2,12 +2,11 @@
 apt-get update  # To get the latest package lists
 apt-get upgrade  # To get the latest package lists
 
-#TODO: check if dotfiles exitst
+#TODO: check if dotfiles exists
 #TODO: check all the dependencies
 #TODO: select what to install?
 #TODO: remember to display messages of confirmation
 #TODO: make zsh the defaul shell
-
 
 # install console fonts
 curl https://gist.githubusercontent.com/lucasdavila/3875946/raw/1c100cae16a06bef154af0f290d665405b554b3b/install_source_code_pro.sh | sh 
@@ -17,10 +16,6 @@ echo "console font installed"
 apt-get install zsh 
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 echo "zsh and oh-my-zsh installed"
-
-# copy dotfiles
-cp ~/ubuntu-dotfiles/.zshrc ~/.zshrc
-dotupdate # copy all dotfiles from directory to ~/
 
 # install gvim
 apt-get install vim-gtk
@@ -33,18 +28,37 @@ mkdir ~/.vim/swap
 # install silver search for vim plugin
 apt-get install silversearcher-ag
 
-# TODO: install python and compile for autocomplete
-
-# tmux 2.0
-apt-get install -y python-software-properties software-properties-common
-add-apt-repository -y ppa:pi-rho/dev
-apt-get update
-sudo apt-get install -y tmux=2.0-1~ppa1~t
-echo 'tmux 2.0 installed'
+# tmux 2.2
+VERSION=2.2
+if [[ $1 = local ]]; then
+echo 'Build "libevent-dev" and "libncurses-dev".' >&2
+else
+sudo apt-get -y install libevent-dev libncurses-dev
+sudo apt-get -y remove tmux
+fi
+wget https://github.com/tmux/tmux/releases/download/${VERSION}/tmux-${VERSION}.tar.gz
+tar xzf tmux-${VERSION}.tar.gz
+rm -f tmux-${VERSION}.tar.gz
+cd tmux-${VERSION}
+if [[ $1 = local ]]; then
+./configure --prefix=$HOME/local
+make
+make install
+mkdir -p $HOME/local/src
+cd -
+rm -rf $HOME/local/src/tmux-*
+mv tmux-${VERSION} $HOME/local/src
+else
+./configure
+make
+sudo make install
+cd -
+sudo rm -rf /usr/local/src/tmux-*
+sudo mv tmux-${VERSION} /usr/local/src
+fi
 
 # install tmux plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-# tmux source ~/.tmux.conf
 
 # install irc chat for tmux
 apt-get install irssi -y
@@ -53,13 +67,7 @@ echo 'issi installed'
 # install antivirus
 apt-get install clamav -y
 freshclam
-clamscan
 echo 'clam antivirus installed'
-
-# TODO: install skype, filezilla, imagemagick, chrome, mysqlworkbench, mercurial
-#   vlc media player, wine, nodejs
-
-apt-get install xclip -y
 
 # install RVM
 # key to verify the installed version
@@ -67,13 +75,23 @@ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB8
 
 \curl -sSL https://get.rvm.io | bash -s stable --ruby
 
-# mysql
+apt-get install xclip -y
+apt-get install vlc -y
+apt-get install mercurial -y
+apt-get install chromium-browser -y
+apt-get install imagemagick -y
+apt-get install filezilla -y
+apt-get install skype -y
 apt-get install mysql-client -y
-
-# workbench
 apt-get install mysql-workbench
-# node js
 apt-get install nodejs -y
-
-# apache
 apt-get install apache2 -y
+
+# TODO
+# install firefox38.bash
+# install i3wm.bash
+
+# copy dotfiles
+git clone https://github.com/budmc29/ubuntu-dotfiles ~/ubuntu-dotfiles
+cp ~/ubuntu-dotfiles/.zshrc ~/.zshrc
+dotupdate # copy all dotfiles from directory to ~/
