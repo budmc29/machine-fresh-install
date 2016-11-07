@@ -12,11 +12,6 @@ apt-get upgrade  # To get the latest package lists
 curl https://gist.githubusercontent.com/lucasdavila/3875946/raw/1c100cae16a06bef154af0f290d665405b554b3b/install_source_code_pro.sh | sh 
 echo "console font installed"
 
-# install zsh and oh-my-zsh
-apt-get install zsh 
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-echo "zsh and oh-my-zsh installed"
-
 # install gvim
 apt-get install vim-gtk
 echo "gvim installed"
@@ -61,8 +56,8 @@ fi
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # install irc chat for tmux
-apt-get install irssi -y
-echo 'issi installed'
+# apt-get install irssi -y 
+# echo 'issi installed'
 
 # install antivirus
 apt-get install clamav -y
@@ -95,3 +90,12 @@ apt-get install apache2 -y
 git clone https://github.com/budmc29/ubuntu-dotfiles ~/ubuntu-dotfiles
 cp ~/ubuntu-dotfiles/.zshrc ~/.zshrc
 dotupdate # copy all dotfiles from directory to ~/
+
+# Vim plugin manager
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+# install zsh and oh-my-zsh
+apt-get install zsh 
+sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+echo "zsh and oh-my-zsh installed"
+
