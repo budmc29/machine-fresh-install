@@ -27,8 +27,13 @@ apt-get install vim-gtk
 echo "gvim installed"
 vundle # install plugin manager for vim
 
+# create directories
 mkdir ~/.vim/undo
 mkdir ~/.vim/swap
+mkdir ~/personal
+mkdir ~/work
+mkdir ~/projects
+
 
 # install silver search for vim plugin
 apt-get install silversearcher-ag
@@ -106,6 +111,10 @@ fi
 
 git clone https://github.com/budmc29/i3-setup.git
 i3-setup/i3-setup.bash
+
+# install firefox38
+git clone https://github.com/budmc29/firefox38.git
+firefox38/firefox38.bash
 
 # install zsh and oh-my-zsh
 apt-get install zsh 
