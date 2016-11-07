@@ -104,6 +104,9 @@ sudo rm -rf /usr/local/src/tmux-*
 sudo mv tmux-${VERSION} /usr/local/src
 fi
 
+git clone https://github.com/budmc29/i3-setup.git
+i3-setup/i3-setup.bash
+
 # install zsh and oh-my-zsh
 apt-get install zsh 
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
