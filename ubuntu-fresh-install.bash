@@ -63,6 +63,7 @@ apt-get install mysql-server -y
 apt-get install mysql-workbench
 apt-get install nodejs -y
 apt-get install apache2 -y
+apt-get install nginx -y
 
 dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
 
