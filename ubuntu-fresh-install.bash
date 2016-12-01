@@ -1,4 +1,5 @@
 #!/bin/bash
+
 apt-get update  # To get the latest package lists
 apt-get upgrade  # To get the latest package lists
 
@@ -57,10 +58,13 @@ apt-get install vlc -y
 apt-get install chromium-browser -y
 apt-get install imagemagick -y
 apt-get install filezilla -y
-apt-get install mysql-client -y
+apt-get install mysql-client-5.6 -y
+apt-get install mysql-server -y
 apt-get install mysql-workbench
 apt-get install nodejs -y
 apt-get install apache2 -y
+
+dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
 
 # TODO
 # install firefox38.bash
@@ -117,6 +121,7 @@ git clone https://github.com/budmc29/firefox38.git
 firefox38/firefox38.bash
 
 # install zsh and oh-my-zsh
-apt-get install zsh 
+apt-get install zsh
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+chsh -s $(which zsh)
 echo "zsh and oh-my-zsh installed"
