@@ -10,7 +10,7 @@ function main()
 
   prepare_repositories
 
-  create_directories
+  create_resources
 
   install_programs
 
@@ -32,10 +32,13 @@ function prepare_repositories()
   apt-get upgrade  # To get the latest package lists
 }
 
-function create_directories()
+function create_resources()
 {
+  FILES=(
+    ".history"
+  )
 
-  DIR_LIST=(
+  DIRS=(
     "~/.vim/undo"
     "~/.vim/swap"
     "~/personal"
@@ -43,8 +46,12 @@ function create_directories()
     "~/projects"
   )
 
-  for dirname in "${DIR_LIST[@]}"; do
-    mkdir -m 777 dirname
+  for dirname in "${DIRS[@]}"; do
+    mkdir -m 777 $dirname
+  done
+
+  for filename in "${FILES[@]}"; do
+    chmod 777 $filename
   done
 
 }
@@ -104,25 +111,31 @@ function install_tmux()
 
 function install_programs()
 {
-  apt-get install xclip -y
-  apt-get install vlc -y
-  apt-get install chromium-browser -y
-  apt-get install imagemagick -y
-  apt-get install filezilla -y
-  apt-get install mysql-client-5.5 -y
-  apt-get install mysql-client -y
-  apt-get install mysql-server-5.5 -y
-  apt-get install mysql-workbench -y
-  apt-get install nodejs -y
-  apt-get install apache2 -y
-  apt-get install nginx -y
-  apt-get install vim-gtk -y
-  apt-get install silversearcher-ag -y
-  apt-get install rxvt-unicode -y
-  apt-get install tomighty -y
+  PROGRAMS=(
+    "xclip"
+    "vlc"
+    "chromium-browser"
+    "imagemagick"
+    "filezilla"
+    "mysql-client-5.5"
+    "mysql-client"
+    "mysql-server-5.5"
+    "mysql-workbench"
+    "nodejs"
+    "apache2"
+    "nginx"
+    "vim-gtk"
+    "silversearcher-ag"
+    "rxvt-unicode"
+    "tomighty"
+    "clamav"
+  )
 
-  `apt-get install clamav -y
-  freshclam`
+  for program in "${PROGRAMS[@]}"; do
+    apt-get install $program -y
+  done
+
+  `freshclam`
 
   dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
 
@@ -188,4 +201,5 @@ function install_fonts()
   curl https://gist.githubusercontent.com/lucasdavila/3875946/raw/1c100cae16a06bef154af0f290d665405b554b3b/install_source_code_pro.sh | sh
 }
 
-main
+# main
+install_programs
