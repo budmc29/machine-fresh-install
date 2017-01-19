@@ -26,18 +26,14 @@ function main()
 
 function prepare_repositories()
 {
-  add-apt-repository ppa:pwr22/tomighty
+  sudo add-apt-repository ppa:pwr22/tomighty
 
-  apt-get update  # To get the latest package lists
-  apt-get upgrade  # To get the latest package lists
+  sudo apt-get update  # To get the latest package lists
+  sudo apt-get upgrade  # To get the latest package lists
 }
 
 function create_resources()
 {
-  FILES=(
-    ".history"
-  )
-
   DIRS=(
     "~/.vim/undo"
     "~/.vim/swap"
@@ -47,13 +43,8 @@ function create_resources()
   )
 
   for dirname in "${DIRS[@]}"; do
-    mkdir -m 777 $dirname
+    mkdir $dirname
   done
-
-  for filename in "${FILES[@]}"; do
-    chmod 777 $filename
-  done
-
 }
 
 function install_rvm()
@@ -62,7 +53,7 @@ function install_rvm()
 # key to verify the installed version
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 
-\curl -sSL https://get.rvm.io | bash -s stable --ruby
+\curl -sSL https://get.rvm.io | bash -s stable
 }
 
 function prepare_dotfiles()
@@ -71,9 +62,9 @@ function prepare_dotfiles()
   git clone https://github.com/budmc29/ubuntu-dotfiles ~/ubuntu-dotfiles
   # replace this with dotter command
   cp -rT ~/ubuntu-dotfiles/ ~/
+  rm -rf ~/.git
 
-  source ~/.zshrc
-
+  # source ~/.zshrc
 }
 
 function install_tmux()
@@ -84,8 +75,8 @@ function install_tmux()
   if [[ $1 = local ]]; then
     echo 'Build "libevent-dev" and "libncurses-dev".' >&2
   else
-    apt-get -y install libevent-dev libncurses-dev
-    apt-get -y remove tmux
+    sudo apt-get -y install libevent-dev libncurses-dev
+    sudo apt-get -y remove tmux
   fi
   wget https://github.com/tmux/tmux/releases/download/${VERSION}/tmux-${VERSION}.tar.gz
   tar xzf tmux-${VERSION}.tar.gz
@@ -117,10 +108,8 @@ function install_programs()
     "chromium-browser"
     "imagemagick"
     "filezilla"
-    "mysql-client-5.5"
-    "mysql-client"
-    "mysql-server-5.5"
-    "mysql-workbench"
+    "mysql-client-5.6"
+    "mysql-server-5.6"
     "nodejs"
     "apache2"
     "nginx"
@@ -129,31 +118,37 @@ function install_programs()
     "rxvt-unicode"
     "tomighty"
     "clamav"
+    "exuberant-ctags"
+    "imagemagick"
+    "redis-server"
+    "libxslt-dev"
+    "libxml2-dev"
+    "libmysqlclient-dev"
+    "libqtwebkit-dev"
+    "libqt4-dev"
   )
 
   for program in "${PROGRAMS[@]}"; do
-    apt-get install $program -y
+    sudo apt-get install $program -y
   done
 
   `freshclam`
 
-  dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
-
   install_tmux
-
   install_i3
-
   install_firefox
-
   install_fonts
   install_rvm
+
+  sudo dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
+  sudo dpkg -i ./mysql-workbench-community_5.6patched.deb
 }
 
 function zsh_setup()
 {
 
-  apt-get install zsh
-  (sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && chsh -s $(which zsh))
+  sudo apt-get install zsh
+  (sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && sudo chsh -s $(which zsh))
 }
 
 function install_i3()
@@ -174,7 +169,7 @@ function version_control_config()
   git config --global user.email "chirica.mugurel@gmail.com"
   git config --global user.name "budmc29"
 
-  apt-get install mercurial -y
+  sudo apt-get install mercurial -y
   hg clone http://bitbucket.org/sjl/hg-prompt/ /usr/local/hg-plugins/prompt
   chmod 777 -R /usr/local/hg-plugins
 }
@@ -201,5 +196,4 @@ function install_fonts()
   curl https://gist.githubusercontent.com/lucasdavila/3875946/raw/1c100cae16a06bef154af0f290d665405b554b3b/install_source_code_pro.sh | sh
 }
 
-# main
-install_programs
+main
