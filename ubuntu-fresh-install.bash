@@ -126,6 +126,8 @@ function install_programs()
     "libmysqlclient-dev"
     "libqtwebkit-dev"
     "libqt4-dev"
+    "libqt4-dev"
+    "libmysqlclient-dev"
   )
 
   for program in "${PROGRAMS[@]}"; do
@@ -139,6 +141,7 @@ function install_programs()
   install_firefox
   install_fonts
   install_rvm
+  install_elasticsearch
 
   sudo dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
   sudo dpkg -i ./mysql-workbench-community_5.6patched.deb
@@ -194,6 +197,14 @@ function install_fonts()
 {
   # install console fonts
   curl https://gist.githubusercontent.com/lucasdavila/3875946/raw/1c100cae16a06bef154af0f290d665405b554b3b/install_source_code_pro.sh | sh
+}
+
+function install_elasticsearch()
+{
+  wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.5.2.deb
+  sudo dpkg -i elasticsearch-1.5.2.deb
+  sudo update-rc.d elasticsearch defaults 95 10
+  sudo /etc/init.d/elasticsearch start
 }
 
 main
