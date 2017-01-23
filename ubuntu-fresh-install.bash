@@ -118,6 +118,7 @@ function install_programs()
     "rxvt-unicode"
     "tomighty"
     "clamav"
+    "kdiff3"
     "exuberant-ctags"
     "imagemagick"
     "redis-server"
