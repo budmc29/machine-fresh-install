@@ -5,6 +5,7 @@
 # TODO: select what to install?
 # TODO: remember to display messages of confirmation
 # TODO: install i3wm.bash
+# TODO: setup AV chrons (clamscan and chkrootkit)
 function main()
 {
 
@@ -27,6 +28,7 @@ function main()
 function prepare_repositories()
 {
   sudo add-apt-repository ppa:pwr22/tomighty
+  sudo add-apt-repository ppa:nilarimogard/webupd8
 
   sudo apt-get update  # To get the latest package lists
   sudo apt-get upgrade  # To get the latest package lists
@@ -102,32 +104,47 @@ function install_tmux()
 
 function install_programs()
 {
+  # Programs by separation
+  #
+  # Personal
+  # Work
+  # Gems
+
+  # alsa-utils: i3wm sound card scripts
+  # acip: i3wm battery status
   PROGRAMS=(
+    "pulseaudio-equalizer"
     "xclip"
     "vlc"
     "chromium-browser"
-    "imagemagick"
     "filezilla"
     "mysql-client-5.6"
     "mysql-server-5.6"
-    "nodejs"
-    "apache2"
-    "nginx"
     "vim-gtk"
     "silversearcher-ag"
     "rxvt-unicode"
-    "tomighty"
     "clamav"
     "kdiff3"
     "exuberant-ctags"
+    "tomighty"
+    "sysstas"
+    "alsa-utils"
+    "acpi"
+    "chkrootkit"
+
+    "nodejs"
+    "apache2"
+    "nginx"
     "imagemagick"
     "redis-server"
+
     "libxslt-dev"
     "libxml2-dev"
     "libmysqlclient-dev"
     "libqtwebkit-dev"
     "libqt4-dev"
     "libqt4-dev"
+    "libmysqlclient-dev"
     "libmysqlclient-dev"
   )
 
