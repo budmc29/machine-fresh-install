@@ -112,6 +112,7 @@ function install_programs()
 
   # alsa-utils: i3wm sound card scripts
   # acip: i3wm battery status
+  # gufw: firewall manager
   PROGRAMS=(
     "pulseaudio-equalizer"
     "xclip"
@@ -124,6 +125,7 @@ function install_programs()
     "silversearcher-ag"
     "rxvt-unicode"
     "clamav"
+    "gufw"
     "kdiff3"
     "exuberant-ctags"
     "tomighty"
