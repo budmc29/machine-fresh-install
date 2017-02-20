@@ -172,6 +172,7 @@ function install_programs()
   install_elasticsearch
 
   sudo dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
+  sudo dpkg -i ./skypeforlinux-64-alpha.deb
   sudo dpkg -i ./mysql-workbench-community_5.6patched.deb
 }
 
