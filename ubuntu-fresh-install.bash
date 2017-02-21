@@ -141,6 +141,7 @@ function install_programs()
     "tomate-indicator-plugin"
     "tomate-statusicon-plugin"
     "tomate-notify-plugin"
+    "p7zip-full"
 
     "nodejs"
     "apache2"
