@@ -2,7 +2,7 @@
 
 Usage:
 ```
-sudo ./ubuntu-fresh-install.bash
+sudo apt-get install git -y && cd ~ && git clone https://github.com/budmc29/ubuntu-fresh-install.git && ./ubuntu-fresh-install/ubuntu-fresh-install.bash
 ```
 
 Notes:
