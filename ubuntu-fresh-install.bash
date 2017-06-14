@@ -29,10 +29,6 @@ function prepare_repositories()
 {
   sudo add-apt-repository ppa:nilarimogard/webupd8
 
-  # Tomate
-  sudo wget -O- http://download.opensuse.org/repositories/home:/eliostvs:/tomate/xUbuntu_$RELEASE/Release.key | sudo apt-key add -
-  sudo bash -c "echo 'deb http://download.opensuse.org/repositories/home:/eliostvs:/tomate/xUbuntu_$RELEASE/ ./' > /etc/apt/sources.list.d/tomate.list"
-
   sudo apt-get update  # To get the latest package lists
   sudo apt-get upgrade  # To get the latest package lists
 }
@@ -135,12 +131,6 @@ function install_programs()
     "alsa-utils"
     "acpi"
     "chkrootkit"
-    "tomate-gtk"
-    "tomate-launcher-plugin"
-    "tomate-alarm-plugin"
-    "tomate-indicator-plugin"
-    "tomate-statusicon-plugin"
-    "tomate-notify-plugin"
     "p7zip-full"
 
     "nodejs"
