@@ -35,12 +35,14 @@ function prepare_repositories()
 
 function create_resources()
 {
+  user=`whoami`
+
   DIRS=(
-    "~/.vim/undo"
-    "~/.vim/swap"
-    "~/personal"
-    "~/work"
-    "~/projects"
+    "/home/$user/.vim/undo"
+    "/home/$user/.vim/swap"
+    "/home/$user/personal"
+    "/home/$user/work"
+    "/home/$user/projects"
   )
 
   for dirname in "${DIRS[@]}"; do
@@ -65,7 +67,7 @@ function prepare_dotfiles()
   cp -rT ~/ubuntu-dotfiles/ ~/
   rm -rf ~/.git
 
-  # source ~/.zshrc
+  source ~/.zshrc
 }
 
 function install_tmux()
@@ -81,23 +83,24 @@ function install_tmux()
   fi
   wget https://github.com/tmux/tmux/releases/download/${VERSION}/tmux-${VERSION}.tar.gz
   tar xzf tmux-${VERSION}.tar.gz
-  rm -f tmux-${VERSION}.tar.gz
+  sudo rm -f tmux-${VERSION}.tar.gz
   cd tmux-${VERSION}
+
   if [[ $1 = local ]]; then
-  ./configure --prefix=$HOME/local
-  make
-  make install
-  mkdir -p $HOME/local/src
-  cd -
-  rm -rf $HOME/local/src/tmux-*
-  mv tmux-${VERSION} $HOME/local/src
+    ./configure --prefix=$HOME/local
+    make
+    make install
+    sudo mkdir -p $HOME/local/src
+    cd -
+    sudo rm -rf $HOME/local/src/tmux-*
+    sudo mv tmux-${VERSION} $HOME/local/src
   else
-  ./configure
-  make
-  make install
-  cd -
-  rm -rf /usr/local/src/tmux-*
-  mv tmux-${VERSION} /usr/local/src
+    ./configure
+    make
+    make install
+    cd -
+    sudo rm -rf /usr/local/src/tmux-*
+    sudo mv tmux-${VERSION} /usr/local/src
   fi
 }
 
