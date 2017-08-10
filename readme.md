@@ -14,3 +14,5 @@ open tmux and:
 ```
 <prefix>I
 ```
+
+Set up multiple screens by adding the set-up the xrandr command in `~/.i3/hostname.config` then running `./i3_config_merge.bash` in the same folder.
