@@ -185,15 +185,15 @@ function install_i3()
 
 function install_firefox()
 {
-  git clone https://github.com/budmc29/firefox38.git
-  cd firefox38 && ./firefox38.bash
+  git clone https://github.com/budmc29/firefox-setup.git
+  cd firefox-setup && ./firefox-install.bash
   cd ..
 }
 
 function version_control_config()
 {
   git config --global user.email "chirica.mugurel@gmail.com"
-  git config --global user.name "budmc29"
+  git config --global user.name "Mugur (Bud) Chirica"
 
   sudo apt-get install mercurial -y
   hg clone http://bitbucket.org/sjl/hg-prompt/ /usr/local/hg-plugins/prompt
