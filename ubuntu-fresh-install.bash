@@ -127,6 +127,7 @@ function install_programs()
     "silversearcher-ag"
     "rxvt-unicode"
     "clamav"
+    "clamav-daemon"
     "gufw"
     "kdiff3"
     "exuberant-ctags"
