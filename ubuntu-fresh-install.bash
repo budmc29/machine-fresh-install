@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Ubuntru fresh install installs all the required programs and
+# configurations for a subjective enjoyable developing experience
 
 # TODO: check if dotfiles exists
 # TODO: check all the dependencies
@@ -231,4 +234,4 @@ function install_elasticsearch()
   sudo /etc/init.d/elasticsearch start
 }
 
-main
+main "$@"
