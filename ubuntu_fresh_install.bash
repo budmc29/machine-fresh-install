@@ -1,7 +1,8 @@
 #!/bin/bash
 #
-# Ubuntru fresh install installs all the required programs and
-# configurations for a subjective enjoyable developing experience
+# Script to install all the required programs and configurations for
+# a GNU/Linux enjoyable developing experience
+# This of course highly subjective
 
 # TODO: check if dotfiles exists
 # TODO: check all the dependencies
@@ -9,35 +10,24 @@
 # TODO: remember to display messages of confirmation
 # TODO: install i3wm.bash
 # TODO: setup AV chrons (clamscan and chkrootkit)
-function main()
-{
-
+main() {
   prepare_repositories
-
   create_resources
-
   install_programs
-
   plugins_setup
-
   version_control_config
-
   zsh_setup
-
   prepare_dotfiles
-
 }
 
-function prepare_repositories()
-{
+prepare_repositories() {
   sudo add-apt-repository ppa:nilarimogard/webupd8
 
   sudo apt-get update  # To get the latest package lists
   sudo apt-get upgrade  # To get the latest package lists
 }
 
-function create_resources()
-{
+create_resources() {
   user=`whoami`
 
   DIRS=(
@@ -53,8 +43,7 @@ function create_resources()
   done
 }
 
-function install_rvm()
-{
+install_rvm() {
 # install RVM
 # key to verify the installed version
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
@@ -62,8 +51,7 @@ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB8
 \curl -sSL https://get.rvm.io | bash -s stable
 }
 
-function prepare_dotfiles()
-{
+prepare_dotfiles() {
   # copy dotfiles
   git clone https://github.com/budmc29/ubuntu-dotfiles ~/ubuntu-dotfiles
   # replace this with dotter command
@@ -73,8 +61,7 @@ function prepare_dotfiles()
   source ~/.zshrc
 }
 
-function install_tmux()
-{
+install_tmux() {
 
   # tmux 2.2
   VERSION=2.2
@@ -107,8 +94,7 @@ function install_tmux()
   fi
 }
 
-function install_programs()
-{
+install_programs() {
   # Programs by separation
   #
   # Personal
@@ -174,28 +160,23 @@ function install_programs()
   sudo dpkg -i ./mysql-workbench-community_5.6patched.deb
 }
 
-function zsh_setup()
-{
-
+zsh_setup() {
   sudo apt-get install zsh
   (sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && sudo chsh -s $(which zsh))
 }
 
-function install_i3()
-{
+install_i3() {
   git clone https://github.com/budmc29/i3-setup.git
   i3-setup/i3-setup.bash
 }
 
-function install_firefox()
-{
+install_firefox() {
   git clone https://github.com/budmc29/firefox-setup.git
   cd firefox-setup && ./firefox-install.bash
   cd ..
 }
 
-function version_control_config()
-{
+version_control_config() {
   git config --global user.email "chirica.mugurel@gmail.com"
   git config --global user.name "Mugur (Bud) Chirica"
 
@@ -204,8 +185,7 @@ function version_control_config()
   chmod 777 -R /usr/local/hg-plugins
 }
 
-function plugins_setup()
-{
+plugins_setup() {
   # install plugin manager for vim
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
@@ -220,14 +200,12 @@ function plugins_setup()
   vim +PluginInstall +qall
 }
 
-function install_fonts()
-{
+install_fonts() {
   # install console fonts
   curl https://gist.githubusercontent.com/lucasdavila/3875946/raw/1c100cae16a06bef154af0f290d665405b554b3b/install_source_code_pro.sh | sh
 }
 
-function install_elasticsearch()
-{
+install_elasticsearch() {
   wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.5.2.deb
   sudo dpkg -i elasticsearch-1.5.2.deb
   sudo update-rc.d elasticsearch defaults 95 10
