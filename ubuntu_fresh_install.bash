@@ -125,6 +125,7 @@ install_programs() {
     "acpi"
     "chkrootkit"
     "p7zip-full"
+    "gimp"
 
     "nodejs"
     "apache2"
