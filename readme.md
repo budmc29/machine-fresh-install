@@ -9,6 +9,8 @@ Notes:
 Fetch all the ssh keys needed
 - Fetch .private_work_aliases
 - Clone all the /personal and /work repos
+- Edit the specific computer's config file ".hostname_pc.config"
+- Open lxappearance and set SFNS Display as the default font"
 
 open tmux and:
 ```

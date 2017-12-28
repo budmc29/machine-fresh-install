@@ -10,14 +10,23 @@
 # TODO: remember to display messages of confirmation
 # TODO: install i3wm.bash
 # TODO: setup AV chrons (clamscan and chkrootkit)
+
 main() {
   prepare_repositories
   create_resources
   install_programs
   plugins_setup
   version_control_config
+  zsh_setup
   prepare_dotfiles
-  zsh_setup # This needs to be the last function since it changes the shell
+
+  echo "---------------------------------------------------------------"
+  echo "---------------------------------------------------------------"
+  echo "Follow the instructions in Readme to complete the setup"
+  echo "---------------------------------------------------------------"
+  echo "---------------------------------------------------------------"
+
+  exit 0
 }
 
 prepare_repositories() {
@@ -160,11 +169,12 @@ install_programs() {
 }
 
 zsh_setup() {
+  rm -rf /home/bud/.oh-my-zsh
+
   sudo apt-get install zsh
 
-  (sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
-  sudo chsh -s $(which zsh))
+  curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+  sudo chsh -s $(which zsh)
 
   echo "Oh My Zsh installed"
 }
@@ -188,14 +198,11 @@ setup_i3() {
   sudo make clean all
   sudo make install
 
-  cd ..
+  cd ../../
 
-  rm i3_setup/ -rf 
+  rm i3_setup/ -rf
 
   echo "I3 installed successfully"
-  echo "Remeber to open, lxappearance and set SFNS Display font for gtk"
-  echo "Press enter to continue"
-  read
 }
 
 version_control_config() {
@@ -225,27 +232,27 @@ plugins_setup() {
 install_fonts() {
   version=1.010
 
-  echo "\n* Downloading version $version of source code pro font"
-
   rm -f SourceCodePro_FontsOnly-$version.zip
   rm -rf SourceCodePro_FontsOnly-$version
 
   wget https://github.com/downloads/adobe/source-code-pro/SourceCodePro_FontsOnly-$version.zip
 
-  echo "\n* Unziping package"
-
   unzip SourceCodePro_FontsOnly-$version.zip
   mkdir -p ~/.fonts
 
-  echo "\n* Copying fonts to ~/fonts"
   cp SourceCodePro_FontsOnly-$version/OTF/*.otf ~/.fonts/
+
+  rm -rf SourceCodePro_FontsOnly*
 
   # Install San Francisco font system wide
   wget https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
   unzip master.zip
+  rm master.zip*
 
   # Move to system fonts
   mv Yo*/*.ttf ~/.fonts
+  rm Yo* -rf
+
 
   # Update fonts cache
   sudo fc-cache -f -v
@@ -258,6 +265,10 @@ install_elasticsearch() {
   sudo dpkg -i elasticsearch-1.5.2.deb
   sudo update-rc.d elasticsearch defaults 95 10
   sudo /etc/init.d/elasticsearch start
+
+  rm elastic*
+
+  echo "Elasticsearch installed"
 }
 
 main "$@"
