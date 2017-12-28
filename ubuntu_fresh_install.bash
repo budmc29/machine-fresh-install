@@ -11,23 +11,22 @@
 # TODO: install i3wm.bash
 # TODO: setup AV chrons (clamscan and chkrootkit)
 main() {
-  # prepare_repositories
-  # create_resources
+  prepare_repositories
+  create_resources
   install_programs
-  # plugins_setup
-  # version_control_config
-  # zsh_setup
-  # prepare_dotfiles
+  plugins_setup
+  version_control_config
+  prepare_dotfiles
+  zsh_setup # This needs to be the last function since it changes the shell
 }
 
 prepare_repositories() {
   sudo add-apt-repository ppa:nilarimogard/webupd8 # Audio packages
   sudo add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty universe' # Mysql 5.6
 
-  sudo apt-get update  # To get the latest package lists
-  sudo apt-get upgrade  # To get the latest package list
+  sudo apt-get update -y  # To get the latest package lists
+  sudo apt-get upgrade -y  # To get the latest package list
 
-  sudo add-apt-repository ppa:no1wantdthisname/ppa # I3 package requirement
   sudo add-apt-repository ppa:noobslab/themes # Gtk theme
 }
 
@@ -50,21 +49,25 @@ create_resources() {
 }
 
 install_rvm() {
-# install RVM
-# key to verify the installed version
-gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  # install RVM
+  # key to verify the installed version
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 
-\curl -sSL https://get.rvm.io | bash -s stable
+  \curl -sSL https://get.rvm.io | bash -s stable
 }
 
 prepare_dotfiles() {
-  # copy dotfiles
+  rm -rf ~/ubuntu-dotfiles
+
   git clone https://github.com/budmc29/ubuntu-dotfiles ~/ubuntu-dotfiles
-  # replace this with dotter command
+
+  # TODO: Replace this with dotter command
   cp -rT ~/ubuntu-dotfiles/ ~/
   rm -rf ~/.git
 
   source ~/.zshrc
+
+  echo "Dotfiles added"
 }
 
 install_tmux() {
@@ -93,6 +96,7 @@ install_programs() {
   # Personal
   # Work
   # Gems
+  # I3 enhancements
 
   # alsa-utils: i3wm sound card scripts
   # acip: i3wm battery status
@@ -121,6 +125,7 @@ install_programs() {
     "gimp"
     "mysql-workbench"
     "skype"
+    "curl"
 
     "nodejs"
     "apache2"
@@ -140,7 +145,6 @@ install_programs() {
     "i3"
     "arandr"
     "ranger"
-    "fontconfig-infinality"
     "polar-night-gtk"
     "compton"
     "ruby-ronn"
@@ -151,20 +155,23 @@ install_programs() {
     sudo apt-get install $program -y
   done
 
-  # install_tmux
-  # install_fonts
-  # install_rvm
-  # install_elasticsearch
-
-  # sudo dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
+  install_tmux
+  install_fonts
+  install_rvm
+  install_elasticsearch
 
   setup_i3
-  # `sudo freshclam` # Update Clam AV
+  `sudo freshclam` # Update Clam AV
 }
 
 zsh_setup() {
   sudo apt-get install zsh
-  (sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && sudo chsh -s $(which zsh))
+
+  (sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+  sudo chsh -s $(which zsh))
+
+  echo "Oh My Zsh installed"
 }
 
 setup_i3() {
@@ -175,19 +182,9 @@ setup_i3() {
 
   dpkg -i playerctl*
 
-  # Install San Francisco font system wide
-  wget https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
-  unzip master.zip
-
-  # Move to system fonts
-  mv Yo*/*.ttf ~/.fonts
-
-  # Set osx display style
-  bash /etc/fonts/infinality/infctl.sh setstyle osx
-
   # Install rofi app launcher
   wget https://launchpad.net/ubuntu/+source/rofi/0.15.11-1/+build/8289001/+files/rofi_0.15.11-1_amd64.deb
-  dpkg -i rofi*.deb
+  sudo dpkg -i rofi*.deb
 
   # install i3blocks
   git clone git://github.com/vivien/i3blocks
@@ -198,11 +195,12 @@ setup_i3() {
 
   cd ..
 
-  rm i3_setup -rf 
+  rm i3_setup/ -rf 
 
   echo "I3 installed successfully"
   echo "Remeber to open, lxappearance and set SFNS Display font for gtk"
   echo "Press enter to continue"
+  read
 }
 
 version_control_config() {
@@ -233,28 +231,31 @@ install_fonts() {
   version=1.010
 
   echo "\n* Downloading version $version of source code pro font"
+
   rm -f SourceCodePro_FontsOnly-$version.zip
   rm -rf SourceCodePro_FontsOnly-$version
+
   wget https://github.com/downloads/adobe/source-code-pro/SourceCodePro_FontsOnly-$version.zip
 
   echo "\n* Unziping package"
+
   unzip SourceCodePro_FontsOnly-$version.zip
   mkdir -p ~/.fonts
 
   echo "\n* Copying fonts to ~/fonts"
   cp SourceCodePro_FontsOnly-$version/OTF/*.otf ~/.fonts/
 
-  echo "\n* Updating font cache"
+  # Install San Francisco font system wide
+  wget https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
+  unzip master.zip
+
+  # Move to system fonts
+  mv Yo*/*.ttf ~/.fonts
+
+  # Update fonts cache
   sudo fc-cache -f -v
 
-  echo "\n* Looking for 'Source Code Pro' in installed fonts"
-  fc-list | grep "Source Code Pro"
-
-  echo "\n* Now, you can use the 'Source Code Pro' fonts, ** for sublime text ** just add the lines bellow to 'Preferences > Settings':"
-  echo '\n  "font_face": "Source Code Pro",'
-  echo '  "font_size": 10'
-
-  echo "\n* Finished :)\n"
+  echo "Fonts installed"
 }
 
 install_elasticsearch() {
