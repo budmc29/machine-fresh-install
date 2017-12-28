@@ -185,7 +185,7 @@ setup_i3() {
 
   wget https://github.com/acrisci/playerctl/releases/download/v0.4.2/playerctl-0.4.2_amd64.deb
 
-  dpkg -i playerctl*
+  sudo dpkg -i playerctl*
 
   # Install rofi app launcher
   wget https://launchpad.net/ubuntu/+source/rofi/0.15.11-1/+build/8289001/+files/rofi_0.15.11-1_amd64.deb
