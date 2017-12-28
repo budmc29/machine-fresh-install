@@ -35,6 +35,8 @@ prepare_repositories() {
 
   sudo apt-get update -y  # To get the latest package lists
   sudo apt-get upgrade -y  # To get the latest package list
+
+  cat /etc/*-release
 }
 
 create_resources() {
