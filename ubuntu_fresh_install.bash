@@ -26,8 +26,6 @@ prepare_repositories() {
 
   sudo apt-get update -y  # To get the latest package lists
   sudo apt-get upgrade -y  # To get the latest package list
-
-  sudo add-apt-repository ppa:noobslab/themes # Gtk theme
 }
 
 create_resources() {
@@ -138,14 +136,11 @@ install_programs() {
     "libmysqlclient-dev"
     "libqtwebkit-dev"
     "libqt4-dev"
-    "libqt4-dev"
-    "libmysqlclient-dev"
     "libmysqlclient-dev"
 
     "i3"
     "arandr"
     "ranger"
-    "polar-night-gtk"
     "compton"
     "ruby-ronn"
     "lxappearance"
