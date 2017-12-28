@@ -11,20 +11,24 @@
 # TODO: install i3wm.bash
 # TODO: setup AV chrons (clamscan and chkrootkit)
 main() {
-  prepare_repositories
-  create_resources
+  # prepare_repositories
+  # create_resources
   install_programs
-  plugins_setup
-  version_control_config
-  zsh_setup
-  prepare_dotfiles
+  # plugins_setup
+  # version_control_config
+  # zsh_setup
+  # prepare_dotfiles
 }
 
 prepare_repositories() {
-  sudo add-apt-repository ppa:nilarimogard/webupd8
+  sudo add-apt-repository ppa:nilarimogard/webupd8 # Audio packages
+  sudo add-apt-repository 'deb http://archive.ubuntu.com/ubuntu trusty universe' # Mysql 5.6
 
   sudo apt-get update  # To get the latest package lists
-  sudo apt-get upgrade  # To get the latest package lists
+  sudo apt-get upgrade  # To get the latest package list
+
+  sudo add-apt-repository ppa:no1wantdthisname/ppa # I3 package requirement
+  sudo add-apt-repository ppa:noobslab/themes # Gtk theme
 }
 
 create_resources() {
@@ -39,8 +43,10 @@ create_resources() {
   )
 
   for dirname in "${DIRS[@]}"; do
-    mkdir $dirname
+    mkdir -p $dirname
   done
+
+  echo "Directories created"
 }
 
 install_rvm() {
@@ -62,40 +68,27 @@ prepare_dotfiles() {
 }
 
 install_tmux() {
+  VERSION=2.6
 
-  # tmux 2.2
-  VERSION=2.2
-  if [[ $1 = local ]]; then
-    echo 'Build "libevent-dev" and "libncurses-dev".' >&2
-  else
-    sudo apt-get -y install libevent-dev libncurses-dev
-    sudo apt-get -y remove tmux
-  fi
+  sudo apt-get -y remove tmux
+  sudo apt-get -y install libevent-dev libncurses-dev automake pkg-config
+
   wget https://github.com/tmux/tmux/releases/download/${VERSION}/tmux-${VERSION}.tar.gz
+
   tar xzf tmux-${VERSION}.tar.gz
   sudo rm -f tmux-${VERSION}.tar.gz
   cd tmux-${VERSION}
 
-  if [[ $1 = local ]]; then
-    ./configure --prefix=$HOME/local
-    make
-    make install
-    sudo mkdir -p $HOME/local/src
-    cd -
-    sudo rm -rf $HOME/local/src/tmux-*
-    sudo mv tmux-${VERSION} $HOME/local/src
-  else
-    ./configure
-    make
-    make install
-    cd -
-    sudo rm -rf /usr/local/src/tmux-*
-    sudo mv tmux-${VERSION} /usr/local/src
-  fi
+  ./configure
+  make
+  make install
+  cd -
+  sudo rm -rf /usr/local/src/tmux-*
+  sudo mv tmux-${VERSION} /usr/local/src
 }
 
 install_programs() {
-  # Programs by separation
+  # Programs by groups listed
   #
   # Personal
   # Work
@@ -120,12 +113,14 @@ install_programs() {
     "gufw"
     "kdiff3"
     "exuberant-ctags"
-    "sysstas"
+    "sysstat"
     "alsa-utils"
     "acpi"
     "chkrootkit"
     "p7zip-full"
     "gimp"
+    "mysql-workbench"
+    "skype"
 
     "nodejs"
     "apache2"
@@ -141,24 +136,30 @@ install_programs() {
     "libqt4-dev"
     "libmysqlclient-dev"
     "libmysqlclient-dev"
+
+    "i3"
+    "arandr"
+    "ranger"
+    "fontconfig-infinality"
+    "polar-night-gtk"
+    "compton"
+    "ruby-ronn"
+    "lxappearance"
   )
 
   for program in "${PROGRAMS[@]}"; do
     sudo apt-get install $program -y
   done
 
-  `freshclam`
+  # install_tmux
+  # install_fonts
+  # install_rvm
+  # install_elasticsearch
 
-  install_tmux
-  install_i3
-  install_firefox
-  install_fonts
-  install_rvm
-  install_elasticsearch
+  # sudo dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
 
-  sudo dpkg -i ./skype-ubuntu-precise_4.3.0.37-1_i386.deb
-  sudo dpkg -i ./skypeforlinux-64-alpha.deb
-  sudo dpkg -i ./mysql-workbench-community_5.6patched.deb
+  setup_i3
+  # `sudo freshclam` # Update Clam AV
 }
 
 zsh_setup() {
@@ -166,15 +167,42 @@ zsh_setup() {
   (sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" && sudo chsh -s $(which zsh))
 }
 
-install_i3() {
-  git clone https://github.com/budmc29/i3-setup.git
-  i3-setup/i3-setup.bash
-}
+setup_i3() {
+  mkdir -p i3_setup
+  cd i3_setup
 
-install_firefox() {
-  git clone https://github.com/budmc29/firefox-setup.git
-  cd firefox-setup && ./firefox-install.bash
+  wget https://github.com/acrisci/playerctl/releases/download/v0.4.2/playerctl-0.4.2_amd64.deb
+
+  dpkg -i playerctl*
+
+  # Install San Francisco font system wide
+  wget https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
+  unzip master.zip
+
+  # Move to system fonts
+  mv Yo*/*.ttf ~/.fonts
+
+  # Set osx display style
+  bash /etc/fonts/infinality/infctl.sh setstyle osx
+
+  # Install rofi app launcher
+  wget https://launchpad.net/ubuntu/+source/rofi/0.15.11-1/+build/8289001/+files/rofi_0.15.11-1_amd64.deb
+  dpkg -i rofi*.deb
+
+  # install i3blocks
+  git clone git://github.com/vivien/i3blocks
+  cd i3blocks
+
+  sudo make clean all
+  sudo make install
+
   cd ..
+
+  rm i3_setup -rf 
+
+  echo "I3 installed successfully"
+  echo "Remeber to open, lxappearance and set SFNS Display font for gtk"
+  echo "Press enter to continue"
 }
 
 version_control_config() {
