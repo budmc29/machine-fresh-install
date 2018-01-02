@@ -46,6 +46,7 @@ create_resources() {
     "/home/$user/personal"
     "/home/$user/work"
     "/home/$user/projects"
+    "/usr/local/hg-plugins/prompt"
   )
 
   for dirname in "${DIRS[@]}"; do
@@ -109,6 +110,7 @@ install_programs() {
   # acip: i3wm battery status
   # gufw: firewall manager
   PROGRAMS=(
+    "mercurial"
     "pulseaudio-equalizer"
     "xclip"
     "vlc"
@@ -209,8 +211,8 @@ version_control_config() {
   git config --global user.email "chirica.mugurel@gmail.com"
   git config --global user.name "Mugur (Bud) Chirica"
 
-  sudo apt-get install mercurial -y
-  hg clone http://bitbucket.org/sjl/hg-prompt/ /usr/local/hg-plugins/prompt
+  cp prompt.py /usr/local/hg-plugins/prompt
+
   chmod 777 -R /usr/local/hg-plugins
 }
 
