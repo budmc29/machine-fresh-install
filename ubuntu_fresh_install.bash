@@ -1,5 +1,5 @@
-#!/bin/bash
-#
+#!/usr/bin/env bash
+
 # Script to install all the required programs and configurations for
 # a GNU/Linux enjoyable developing experience
 # This of course highly subjective
@@ -38,7 +38,7 @@ prepare_repositories() {
 }
 
 create_resources() {
-  user=`whoami`
+  user=$(whoami)
 
   DIRS=(
     "/home/$user/.vim/undo"
@@ -49,7 +49,7 @@ create_resources() {
   )
 
   for dirname in "${DIRS[@]}"; do
-    mkdir -p $dirname
+    mkdir -p "$dirname"
   done
 
   echo "Directories created"
@@ -87,12 +87,12 @@ install_tmux() {
 
   tar xzf tmux-${VERSION}.tar.gz
   sudo rm -f tmux-${VERSION}.tar.gz
-  cd tmux-${VERSION}
+  cd tmux-${VERSION} || exit
 
   ./configure
   make
   make install
-  cd -
+  cd - || exit
   sudo rm -rf /usr/local/src/tmux-*
   sudo mv tmux-${VERSION} /usr/local/src
 }
@@ -156,7 +156,7 @@ install_programs() {
   )
 
   for program in "${PROGRAMS[@]}"; do
-    sudo apt-get install $program -y
+    sudo apt-get install "$program" -y
   done
 
   install_tmux
@@ -165,7 +165,7 @@ install_programs() {
   install_elasticsearch
 
   setup_i3
-  `sudo freshclam` # Update Clam AV
+  sudo freshclam # Update Clam AV
 }
 
 zsh_setup() {
@@ -174,14 +174,14 @@ zsh_setup() {
   sudo apt-get install zsh
 
   curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-  sudo chsh -s $(which zsh)
+  sudo chsh -s "$(which zsh)"
 
   echo "Oh My Zsh installed"
 }
 
 setup_i3() {
   mkdir -p i3_setup
-  cd i3_setup
+  cd i3_setup || exit
 
   wget https://github.com/acrisci/playerctl/releases/download/v0.4.2/playerctl-0.4.2_amd64.deb
 
@@ -193,12 +193,12 @@ setup_i3() {
 
   # install i3blocks
   git clone git://github.com/vivien/i3blocks
-  cd i3blocks
+  cd i3blocks || exit
 
   sudo make clean all
   sudo make install
 
-  cd ../../
+  cd ../../ || exit
 
   rm i3_setup/ -rf
 
