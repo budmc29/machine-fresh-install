@@ -1,4 +1,4 @@
-# Install needed programs on a ubuntu 14.04 machine
+# Turnkey setup for Ubuntu 16.04 machine
 
 Usage:
 ```
