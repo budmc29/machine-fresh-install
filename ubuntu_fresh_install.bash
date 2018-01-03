@@ -135,6 +135,7 @@ install_programs() {
     "mysql-workbench"
     "skype"
     "curl"
+    "openjdk-8-jdk"
 
     "nodejs"
     "apache2"
@@ -263,8 +264,8 @@ install_fonts() {
 }
 
 install_elasticsearch() {
-  wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.5.2.deb
-  sudo dpkg -i elasticsearch-1.5.2.deb
+  wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.2.1.deb
+  sudo dpkg -i elasticsearch-1.2.1.deb
   sudo update-rc.d elasticsearch defaults 95 10
   sudo /etc/init.d/elasticsearch start
 
