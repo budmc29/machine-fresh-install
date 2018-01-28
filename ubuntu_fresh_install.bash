@@ -15,6 +15,8 @@
 set -o nounset
 set -o errexit
 
+user=$(whoami)
+
 main() {
   prepare_repositories
   create_resources
@@ -42,8 +44,6 @@ prepare_repositories() {
 }
 
 create_resources() {
-  user=$(whoami)
-
   DIRS=(
     "/home/$user/.vim/undo"
     "/home/$user/.vim/swap"
@@ -99,6 +99,8 @@ install_tmux() {
   cd - || exit
   sudo rm -rf /usr/local/src/tmux-*
   sudo mv tmux-${VERSION} /usr/local/src
+
+  /home/$user/.tmux/plugins/tpm/bin/install_plugins
 }
 
 install_programs() {
@@ -174,7 +176,7 @@ install_programs() {
 }
 
 zsh_setup() {
-  rm -rf /home/bud/.oh-my-zsh
+  rm -rf /home/$user/.oh-my-zsh
 
   sudo apt-get install zsh
 
