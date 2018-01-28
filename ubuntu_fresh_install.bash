@@ -10,6 +10,10 @@
 # TODO: remember to display messages of confirmation
 # TODO: install i3wm.bash
 # TODO: setup AV chrons (clamscan and chkrootkit)
+# TODO: Change order maybe? MySQL requires input
+
+set -o nounset
+set -o errexit
 
 main() {
   prepare_repositories
@@ -50,15 +54,14 @@ create_resources() {
   )
 
   for dirname in "${DIRS[@]}"; do
-    mkdir -p "$dirname"
+    sudo mkdir -p "$dirname"
   done
 
   echo "Directories created"
 }
 
 install_rvm() {
-  # install RVM
-  # key to verify the installed version
+  # RVM key to verify the installed version
   gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
 
   \curl -sSL https://get.rvm.io | bash -s stable
@@ -72,8 +75,6 @@ prepare_dotfiles() {
   # TODO: Replace this with dotter command
   cp -rT ~/ubuntu-dotfiles/ ~/
   rm -rf ~/.git
-
-  source ~/.zshrc
 
   echo "Dotfiles added"
 }
@@ -90,15 +91,17 @@ install_tmux() {
   sudo rm -f tmux-${VERSION}.tar.gz
   cd tmux-${VERSION} || exit
 
-  ./configure
-  make
-  make install
+  sudo ./configure
+  sudo make
+  sudo make install
   cd - || exit
   sudo rm -rf /usr/local/src/tmux-*
   sudo mv tmux-${VERSION} /usr/local/src
 }
 
 install_programs() {
+  sudo service apache2 stop
+
   # Programs by groups listed
   #
   # Personal
@@ -133,9 +136,7 @@ install_programs() {
     "p7zip-full"
     "gimp"
     "mysql-workbench"
-    "skype"
     "curl"
-
     "nodejs"
     "apache2"
     "nginx"
@@ -165,9 +166,9 @@ install_programs() {
   install_fonts
   install_rvm
   install_elasticsearch
+  install_skype
 
   setup_i3
-  sudo freshclam # Update Clam AV
 }
 
 zsh_setup() {
@@ -189,11 +190,11 @@ setup_i3() {
 
   sudo dpkg -i playerctl*
 
-  # Install rofi app launcher
+  # Rofi app launcher
   wget https://launchpad.net/ubuntu/+source/rofi/0.15.11-1/+build/8289001/+files/rofi_0.15.11-1_amd64.deb
   sudo dpkg -i rofi*.deb
 
-  # install i3blocks
+  # i3blocks
   git clone git://github.com/vivien/i3blocks
   cd i3blocks || exit
 
@@ -211,23 +212,20 @@ version_control_config() {
   git config --global user.email "chirica.mugurel@gmail.com"
   git config --global user.name "Mugur (Bud) Chirica"
 
-  cp prompt.py /usr/local/hg-plugins/prompt
+  sudo cp prompt.py /usr/local/hg-plugins/prompt
 
-  chmod 777 -R /usr/local/hg-plugins
+  sudo chmod 777 -R /usr/local/hg-plugins
 }
 
 plugins_setup() {
-  # install plugin manager for vim
+  # Vundle plugin manager for vim
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
-  # install tmux plugins
+  # Tmux plugins
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   chmod -R 777 ~/.tmux
 
-  # Vim plugin manager
-  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-  # install vim plugins
+  # Vim plugins
   vim +PluginInstall +qall
 }
 
@@ -271,6 +269,15 @@ install_elasticsearch() {
   rm elastic*
 
   echo "Elasticsearch installed"
+}
+
+install_skype() {
+  wget https://repo.skype.com/latest/skypeforlinux-64.deb
+  sudo dpkg -i skypeforlinux-64.deb
+
+  rm skype*
+
+  echo "Skype installed"
 }
 
 main "$@"
