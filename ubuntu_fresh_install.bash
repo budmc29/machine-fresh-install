@@ -57,6 +57,8 @@ create_resources() {
     sudo mkdir -p "$dirname"
   done
 
+  touch "/home/$user/.private_work_aliases"
+
   echo "Directories created"
 }
 
