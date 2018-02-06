@@ -174,6 +174,7 @@ install_programs() {
   install_rvm
   install_elasticsearch
   install_skype
+  install_playerctl
 
   setup_i3
 }
@@ -285,6 +286,18 @@ install_skype() {
   rm skype*
 
   echo "Skype installed"
+}
+
+install_playerctl() {
+  version=0.5.0
+  file=playerctl-${version}_amd64.deb
+
+  wget https://github.com/acrisci/playerctl/releases/download/v${version}/$file
+  sudo dpkg -i $file
+
+  rm $file
+
+  echo "Playerctl installed"
 }
 
 main "$@"
