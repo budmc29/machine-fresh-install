@@ -142,7 +142,7 @@ install_programs() {
     "mysql-workbench"
     "curl"
     "gpick"
-    "kruler"
+    "screenruler"
 
     "nodejs"
     "apache2"
