@@ -157,6 +157,7 @@ install_programs() {
     "libqt4-dev"
     "libmysqlclient-dev"
     "libcurl4-gnutls-dev"
+    "libmagickwand-dev"
 
     "i3"
     "arandr"
