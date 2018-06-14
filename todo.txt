@@ -1,3 +1,4 @@
 Make the install runnable multiple times
 Fix setting zsh as the main shell
 Automate the process for installing the required plugins?
+Fix apache2 (on some servers is running and on others it's not)
