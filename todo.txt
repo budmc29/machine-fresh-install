@@ -1,3 +1,0 @@
-Make the install runnable multiple times
-Fix setting zsh as the main shell
-Automate the process for installing the required plugins?
