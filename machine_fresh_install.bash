@@ -41,16 +41,18 @@ create_resources() {
 
   touch "$HOME/.private_work_aliases"
 
+  sudo chmod 777 -R ~/.vim/undo ~/.vim/swap
+
   echo "Directories created"
 }
 
 prepare_dotfiles() {
   rm -rf ~/buds-dotfiles
 
-  git clone --single-branch --branch mac git@github.com:budmc29/buds-dotfiles.git ~/buds-dotfiles
+  git clone --single-branch git@github.com:budmc29/buds-dotfiles.git ~/buds-dotfiles
 
   rm -rf ~/buds-dotfiles/.git
-  cp -r ~/buds-dotfiles/ ~/
+  cp -r ~/buds-dotfiles/ ~/ && sudo rm -rf ~/.git
 
   echo "Dotfiles added"
 }
@@ -68,12 +70,7 @@ install_programs() {
 }
 
 install_fonts() {
-  version=1.010
-
-  rm -f SourceCodePro_FontsOnly-$version.zip
-  rm -rf SourceCodePro_FontsOnly-$version
-
-wget https://github.com/adobe-fonts/source-code-pro/releases/download/2.042R-u%2F1.062R-i%2F1.026R-vf/OTF-source-code-pro-2.042R-u_1.062R-i.zip
+  wget https://github.com/adobe-fonts/source-code-pro/releases/download/2.042R-u%2F1.062R-i%2F1.026R-vf/OTF-source-code-pro-2.042R-u_1.062R-i.zip
 
   unzip OTF-source-code-pro-2.042R-u_1.062R-i.zip
   mkdir -p ~/.fonts
@@ -99,9 +96,6 @@ zsh_setup() {
 
   sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-  # curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-  # sudo chsh -s "$(which zsh)"
-
   sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
   echo "Oh My Zsh installed"
@@ -109,14 +103,14 @@ zsh_setup() {
 
 plugins_setup() {
   # Vundle plugin manager for vim
-  # sudo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  sudo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
   # Tmux plugins
-  # git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-  # chmod -R 777 ~/.tmux
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  chmod -R 777 ~/.tmux
 
   # Vim plugins
-  vim +PluginInstall +qall
+  sudo vim +PluginInstall +qall
 }
 
 
