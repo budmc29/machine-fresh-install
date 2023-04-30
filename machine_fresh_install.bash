@@ -73,14 +73,14 @@ install_fonts() {
   rm -f SourceCodePro_FontsOnly-$version.zip
   rm -rf SourceCodePro_FontsOnly-$version
 
-  wget https://github.com/downloads/adobe/source-code-pro/SourceCodePro_FontsOnly-$version.zip
+wget https://github.com/adobe-fonts/source-code-pro/releases/download/2.042R-u%2F1.062R-i%2F1.026R-vf/OTF-source-code-pro-2.042R-u_1.062R-i.zip
 
-  unzip SourceCodePro_FontsOnly-$version.zip
+  unzip OTF-source-code-pro-2.042R-u_1.062R-i.zip
   mkdir -p ~/.fonts
 
-  sudo cp SourceCodePro_FontsOnly-$version/OTF/*.otf ~/.fonts/
+  sudo cp OTF/*.otf ~/Library/Fonts
 
-  rm -rf SourceCodePro_FontsOnly*
+  rm -rf OTF*
 
   # Install San Francisco font system wide
   wget https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
@@ -88,7 +88,7 @@ install_fonts() {
   rm master.zip*
 
   # Move to system fonts
-  mv Yo*/*.ttf ~/.fonts
+  mv Yo*/*.ttf ~/Library/Fonts
   rm -rf Yo*
 
   echo "Fonts installed"
