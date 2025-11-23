@@ -101,7 +101,7 @@ install_fonts() {
 zsh_setup() {
   sudo rm -rf /home/$user/.oh-my-zsh
 
-  RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  CHSH=no RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
   local zsh_custom=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
   local syntax_dir="$zsh_custom/plugins/zsh-syntax-highlighting"
