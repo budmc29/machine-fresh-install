@@ -65,6 +65,7 @@ install_programs() {
   install_tmux
   # install_fonts
   sudo apt-get install silversearcher-ag
+  sudo apt-get install zsh
   sudo apt-get install vim
   sudo apt-get install wget
 }
