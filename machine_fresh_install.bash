@@ -44,6 +44,10 @@ create_resources() {
     "$HOME/projects"
   )
 
+  if [ -d "$HOME/.vim" ]; then
+    sudo chown -R "$user:$user" "$HOME/.vim"
+  fi
+
   for dirname in "${DIRS[@]}"; do
     mkdir -p "$dirname"
     sudo chown -R "$user:$user" "$dirname"
