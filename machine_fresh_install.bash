@@ -143,8 +143,9 @@ prepare_dotfiles() {
 
   if [ -d "$dotfiles_dir/.git" ]; then
     git -C "$dotfiles_dir" pull --ff-only
+  elif [ -d "$dotfiles_dir" ]; then
+    echo "$dotfiles_dir exists without git metadata; skipping clone."
   else
-    rm -rf "$dotfiles_dir"
     git clone --single-branch git@github.com:budmc29/theos-dotfiles.git "$dotfiles_dir"
   fi
 
