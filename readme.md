@@ -1,4 +1,4 @@
-# Turnkey setup for a new Mac
+# Turnkey setup for Ubuntu or macOS
 
 Usage:
 ```
@@ -11,3 +11,7 @@ After set-up is complete:
   - Settings > Customise modifier keys > Input sources > uncheck anything using `^Space`
 - Install Tmux plugins by doing `Prefix (Ctl + Space) + I`
 - Install Vim Plugins with `PluginInstall`
+
+Notes:
+- On Ubuntu the script uses `apt` to install prerequisites.
+- On macOS the script relies on Homebrew (it will be installed automatically if missing).

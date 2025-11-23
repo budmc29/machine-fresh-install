@@ -7,6 +7,23 @@ set -o nounset
 set -o errexit
 
 user=$(whoami)
+user_group=$(id -gn "$user")
+os_type=""
+
+detect_os() {
+  case "$(uname -s)" in
+    Linux*)
+      os_type="ubuntu"
+      ;;
+    Darwin*)
+      os_type="macos"
+      ;;
+    *)
+      echo "Unsupported operating system. This script works on Ubuntu or macOS only."
+      exit 1
+      ;;
+  esac
+}
 
 apt_install_if_missing() {
   local package=$1
@@ -18,7 +35,67 @@ apt_install_if_missing() {
   sudo apt-get install "$package"
 }
 
+ensure_brew() {
+  if command -v brew >/dev/null 2>&1; then
+    return
+  fi
+
+  if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    return
+  fi
+
+  echo "Installing Homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  else
+    echo "Homebrew installation failed."
+    exit 1
+  fi
+}
+
+brew_install_if_missing() {
+  local package=$1
+  ensure_brew
+  if brew list --versions "$package" >/dev/null 2>&1; then
+    echo "$package already installed"
+    return
+  fi
+
+  brew install "$package"
+}
+
+ensure_default_editor() {
+  local vim_path
+  vim_path=$(command -v vim || true)
+
+  if [ -z "$vim_path" ]; then
+    echo "vim not found on PATH; skipping default editor configuration"
+    return
+  fi
+
+  touch "$HOME/.profile"
+
+  if ! grep -qs "export EDITOR=$vim_path" "$HOME/.profile"; then
+    echo "export EDITOR=$vim_path" >> "$HOME/.profile"
+  fi
+
+  if ! grep -qs "export VISUAL=$vim_path" "$HOME/.profile"; then
+    echo "export VISUAL=$vim_path" >> "$HOME/.profile"
+  fi
+}
+
 main() {
+  detect_os
   create_resources
   install_programs
   plugins_setup
@@ -45,16 +122,16 @@ create_resources() {
   )
 
   if [ -d "$HOME/.vim" ]; then
-    sudo chown -R "$user:$user" "$HOME/.vim"
+    sudo chown -R "$user:$user_group" "$HOME/.vim"
   fi
 
   for dirname in "${DIRS[@]}"; do
     mkdir -p "$dirname"
-    sudo chown -R "$user:$user" "$dirname"
+    sudo chown -R "$user:$user_group" "$dirname"
   done
 
   touch "$HOME/.private_work_aliases"
-  sudo chown "$user:$user" "$HOME/.private_work_aliases"
+  sudo chown "$user:$user_group" "$HOME/.private_work_aliases"
 
   chmod -R u+rwX ~/.vim/undo ~/.vim/swap
 
@@ -77,6 +154,16 @@ prepare_dotfiles() {
 }
 
 install_programs() {
+  if [ "$os_type" = "ubuntu" ]; then
+    install_programs_ubuntu
+  else
+    install_programs_macos
+  fi
+
+  ensure_default_editor
+}
+
+install_programs_ubuntu() {
   apt_install_if_missing tmux
   # install_fonts
   apt_install_if_missing silversearcher-ag
@@ -85,11 +172,16 @@ install_programs() {
   apt_install_if_missing zsh
   apt_install_if_missing vim
   apt_install_if_missing wget
+}
 
-  if [ -z "${EDITOR:-}" ] || [ "$EDITOR" != "$(command -v vim)" ]; then
-    echo "export EDITOR=$(command -v vim)" >> ~/.profile
-    echo "export VISUAL=$(command -v vim)" >> ~/.profile
-  fi
+install_programs_macos() {
+  brew_install_if_missing tmux
+  brew_install_if_missing the_silver_searcher
+  brew_install_if_missing xclip
+  brew_install_if_missing rbenv
+  brew_install_if_missing zsh
+  brew_install_if_missing vim
+  brew_install_if_missing wget
 }
 
 install_fonts() {
@@ -115,14 +207,14 @@ install_fonts() {
 }
 
 zsh_setup() {
-  local omz_dir="/home/$user/.oh-my-zsh"
+  local omz_dir="$HOME/.oh-my-zsh"
   if [ -d "$omz_dir" ]; then
     echo "Oh My Zsh already installed"
   else
     CHSH=no RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   fi
 
-  local zsh_custom=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+  local zsh_custom=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
   local syntax_dir="$zsh_custom/plugins/zsh-syntax-highlighting"
   mkdir -p "$zsh_custom/plugins"
   if [ -d "$syntax_dir/.git" ]; then
