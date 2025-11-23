@@ -80,6 +80,11 @@ install_programs() {
   apt_install_if_missing zsh
   apt_install_if_missing vim
   apt_install_if_missing wget
+
+  if [ -z "${EDITOR:-}" ] || [ "$EDITOR" != "$(command -v vim)" ]; then
+    echo "export EDITOR=$(command -v vim)" >> ~/.profile
+    echo "export VISUAL=$(command -v vim)" >> ~/.profile
+  fi
 }
 
 install_fonts() {
