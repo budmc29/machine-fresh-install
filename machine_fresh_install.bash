@@ -52,7 +52,7 @@ prepare_dotfiles() {
   git clone --single-branch git@github.com:budmc29/buds-dotfiles.git ~/buds-dotfiles
 
   rm -rf ~/buds-dotfiles/.git
-  cp -r ~/buds-dotfiles/ ~/ && sudo rm -rf ~/.git
+  cp -r ~/buds-dotfiles/. ~/ && sudo rm -rf ~/.git
 
   echo "Dotfiles added"
 }
