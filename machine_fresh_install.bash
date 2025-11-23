@@ -145,7 +145,7 @@ prepare_dotfiles() {
     git -C "$dotfiles_dir" pull --ff-only
   else
     rm -rf "$dotfiles_dir"
-    git clone --single-branch git@github.com:theochirica/theos-dotfiles.git "$dotfiles_dir"
+    git clone --single-branch git@github.com:budmc29/theos-dotfiles.git "$dotfiles_dir"
   fi
 
   cp -r "$dotfiles_dir"/. ~/ && sudo rm -rf ~/.git
