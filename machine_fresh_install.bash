@@ -99,15 +99,21 @@ install_fonts() {
 }
 
 zsh_setup() {
-  sudo rm -rf /home/$user/.oh-my-zsh
-
-  CHSH=no RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  local omz_dir="/home/$user/.oh-my-zsh"
+  if [ -d "$omz_dir" ]; then
+    echo "Oh My Zsh already installed"
+  else
+    CHSH=no RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  fi
 
   local zsh_custom=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
   local syntax_dir="$zsh_custom/plugins/zsh-syntax-highlighting"
-  sudo rm -rf "$syntax_dir"
   mkdir -p "$zsh_custom/plugins"
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$syntax_dir"
+  if [ -d "$syntax_dir/.git" ]; then
+    git -C "$syntax_dir" pull --ff-only
+  else
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$syntax_dir"
+  fi
 
   echo "Oh My Zsh installed"
 }
