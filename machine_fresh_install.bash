@@ -8,6 +8,16 @@ set -o errexit
 
 user=$(whoami)
 
+apt_install_if_missing() {
+  local package=$1
+  if dpkg -s "$package" >/dev/null 2>&1; then
+    echo "$package already installed"
+    return
+  fi
+
+  sudo apt-get install "$package"
+}
+
 main() {
   create_resources
   install_programs
@@ -57,17 +67,13 @@ prepare_dotfiles() {
   echo "Dotfiles added"
 }
 
-install_tmux() {
-  sudo apt-get install tmux
-}
-
 install_programs() {
-  install_tmux
+  apt_install_if_missing tmux
   # install_fonts
-  sudo apt-get install silversearcher-ag
-  sudo apt-get install zsh
-  sudo apt-get install vim
-  sudo apt-get install wget
+  apt_install_if_missing silversearcher-ag
+  apt_install_if_missing zsh
+  apt_install_if_missing vim
+  apt_install_if_missing wget
 }
 
 install_fonts() {
