@@ -44,14 +44,15 @@ create_resources() {
     "$HOME/projects"
   )
 
-
   for dirname in "${DIRS[@]}"; do
-    sudo mkdir -p "$dirname"
+    mkdir -p "$dirname"
+    sudo chown -R "$user:$user" "$dirname"
   done
 
   touch "$HOME/.private_work_aliases"
+  sudo chown "$user:$user" "$HOME/.private_work_aliases"
 
-  sudo chmod 777 -R ~/.vim/undo ~/.vim/swap
+  chmod -R u+rwX ~/.vim/undo ~/.vim/swap
 
   echo "Directories created"
 }
