@@ -62,12 +62,12 @@ create_resources() {
 }
 
 prepare_dotfiles() {
-  rm -rf ~/buds-dotfiles
+  rm -rf ~/theos-dotfiles
 
-  git clone --single-branch git@github.com:budmc29/buds-dotfiles.git ~/buds-dotfiles
+  git clone --single-branch git@github.com:theochirica/theos-dotfiles.git ~/theos-dotfiles
 
-  rm -rf ~/buds-dotfiles/.git
-  cp -r ~/buds-dotfiles/. ~/ && sudo rm -rf ~/.git
+  rm -rf ~/theos-dotfiles/.git
+  cp -r ~/theos-dotfiles/. ~/ && sudo rm -rf ~/.git
 
   echo "Dotfiles added"
 }
