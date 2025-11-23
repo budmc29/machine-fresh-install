@@ -76,6 +76,7 @@ install_programs() {
   apt_install_if_missing tmux
   # install_fonts
   apt_install_if_missing silversearcher-ag
+  apt_install_if_missing xclip
   apt_install_if_missing zsh
   apt_install_if_missing vim
   apt_install_if_missing wget
