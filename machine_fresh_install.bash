@@ -62,12 +62,16 @@ create_resources() {
 }
 
 prepare_dotfiles() {
-  rm -rf ~/theos-dotfiles
+  local dotfiles_dir="$HOME/theos-dotfiles"
 
-  git clone --single-branch git@github.com:theochirica/theos-dotfiles.git ~/theos-dotfiles
+  if [ -d "$dotfiles_dir/.git" ]; then
+    git -C "$dotfiles_dir" pull --ff-only
+  else
+    rm -rf "$dotfiles_dir"
+    git clone --single-branch git@github.com:theochirica/theos-dotfiles.git "$dotfiles_dir"
+  fi
 
-  rm -rf ~/theos-dotfiles/.git
-  cp -r ~/theos-dotfiles/. ~/ && sudo rm -rf ~/.git
+  cp -r "$dotfiles_dir"/. ~/ && sudo rm -rf ~/.git
 
   echo "Dotfiles added"
 }
