@@ -58,15 +58,15 @@ prepare_dotfiles() {
 }
 
 install_tmux() {
-  brew install tmux
+  sudo apt-get install tmux
 }
 
 install_programs() {
   install_tmux
-  install_fonts
-
-  brew install ag
-  brew install wget
+  # install_fonts
+  sudo apt-get install silversearcher-ag
+  sudo apt-get install vim
+  sudo apt-get install wget
 }
 
 install_fonts() {
@@ -75,7 +75,7 @@ install_fonts() {
   unzip OTF-source-code-pro-2.042R-u_1.062R-i.zip
   mkdir -p ~/.fonts
 
-  sudo cp OTF/*.otf ~/Library/Fonts
+  sudo cp OTF/*.otf /usr/local/share/fonts/
 
   rm -rf OTF*
 
@@ -85,7 +85,7 @@ install_fonts() {
   rm master.zip*
 
   # Move to system fonts
-  mv Yo*/*.ttf ~/Library/Fonts
+  sudo mv Yo*/*.ttf /usr/local/share/fonts/
   rm -rf Yo*
 
   echo "Fonts installed"
@@ -103,10 +103,20 @@ zsh_setup() {
 
 plugins_setup() {
   # Vundle plugin manager for vim
-  sudo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  local vundle_dir="$HOME/.vim/bundle/Vundle.vim"
+  if [ -d "$vundle_dir/.git" ]; then
+    sudo git -C "$vundle_dir" pull --ff-only
+  else
+    sudo git clone https://github.com/VundleVim/Vundle.vim.git "$vundle_dir"
+  fi
 
   # Tmux plugins
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  local tpm_dir="$HOME/.tmux/plugins/tpm"
+  if [ -d "$tpm_dir/.git" ]; then
+    git -C "$tpm_dir" pull --ff-only
+  else
+    git clone https://github.com/tmux-plugins/tpm "$tpm_dir"
+  fi
   chmod -R 777 ~/.tmux
 
   # Vim plugins
