@@ -131,6 +131,13 @@ zsh_setup() {
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$syntax_dir"
   fi
 
+  local fast_dir="$zsh_custom/plugins/fast-syntax-highlighting"
+  if [ -d "$fast_dir/.git" ]; then
+    git -C "$fast_dir" pull --ff-only
+  else
+    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$fast_dir"
+  fi
+
   echo "Oh My Zsh installed"
 }
 
