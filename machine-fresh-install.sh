@@ -6,6 +6,8 @@
 set -o nounset
 set -o errexit
 
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 user=$(whoami)
 user_group=$(id -gn "$user")
 os_type=""
@@ -139,17 +141,14 @@ create_resources() {
 }
 
 prepare_dotfiles() {
-  local dotfiles_dir="$HOME/theos-dotfiles"
+  local dotfiles_dir="$script_dir/dotfiles"
 
-  if [ -d "$dotfiles_dir/.git" ]; then
-    git -C "$dotfiles_dir" pull --ff-only
-  elif [ -d "$dotfiles_dir" ]; then
-    echo "$dotfiles_dir exists without git metadata; skipping clone."
-  else
-    git clone --single-branch git@github.com:budmc29/theos-dotfiles.git "$dotfiles_dir"
+  if [ ! -d "$dotfiles_dir" ]; then
+    echo "Dotfiles directory missing at $dotfiles_dir"
+    exit 1
   fi
 
-  cp -r "$dotfiles_dir"/. ~/ && sudo rm -rf ~/.git
+  cp -r "$dotfiles_dir"/. "$HOME"/
 
   echo "Dotfiles added"
 }

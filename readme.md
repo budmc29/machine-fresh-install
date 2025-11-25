@@ -2,7 +2,7 @@
 
 Usage:
 ```
-git clone https://github.com/budmc29/machine-fresh-install.git && ./machine-fresh-install/machine_fresh_install.bash
+./machine-fresh-install.sh
 ```
 After set-up is complete:
 - Set ZSH as default shell
