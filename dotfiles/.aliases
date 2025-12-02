@@ -1,0 +1,112 @@
+# ALIASES
+#
+#
+#
+# Ruby
+alias first="rvm use 1.9.3@first && rvm current && cd ~/leaderboard"
+alias startup="source ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh && xmodmap ~/vimkeys"
+
+# Rails
+alias et="RAILS_ENV=test"
+alias ed="RAILS_ENV=development"
+
+alias spec="bundle exec rspec"
+alias spec2="bundle exec rspec spec"
+alias features="bundle exec rspec spec/features"
+
+alias rgc="rails g controller"
+alias rgm="rails g model"
+
+alias be="bundle exec"
+alias ber="bundle exec rake"
+
+alias sr='bin/rake db:migrate RAILS_ENV=test & bin/spring rspec'
+alias src='bin/spring rspec spec/controllers'
+alias srf='bin/spring rspec spec/features'
+alias srm='bin/spring rspec spec/models'
+alias focus='bin/spring rspec --tag focus'
+alias bunddle='bin/spring stop & bundle install'
+alias tire='bin/rake environment tire:import:all FORCE=true'
+
+# PHP
+alias phpa='php -dcli.prompt="\nphp> " -a'
+
+#git
+alias gs="git status"
+alias gp="git push"
+alias gb="git branch"
+alias gc="git commit -v"
+alias ga="git add -A"
+alias gd="git diff --cached"
+alias gco="git checkout"
+alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gll="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -n 10"
+alias gaa="git add -A"
+alias checkout_branches="git branch -r | grep -v '\->' | while read remote; do git branch --track \"${remote#origin/}\" \"$remote\"; done && git fetch --all && git pull --all"
+
+#Misc
+alias vimrc="vim ~/.vimrc"
+alias vundle="git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim"
+alias vimwiki="vim ~/vimwiki/index.md"
+alias viki="vim ~/vimwiki/index.md"
+alias wayt="vim ~/wayyd_todo.md"
+alias home="vim ~/home_todo.md"
+
+# tmux
+alias tmuxrc="vim ~/.tmux.conf"
+
+# ubuntu processes
+alias pss="ps -ef | grep"
+
+# projects
+alias pr="cd ~/projects && ls"
+alias projects="cd ~/projects && ls"
+alias ex="cd ~/projects/exercism/ruby && ls"
+alias prbackup="cd ~/projects && git status && git add -A && git commit \
+&& git push"
+
+alias prupdate="cd ~/projects && git pull"
+
+alias scr="cd ~/work/scripts"
+alias ezsh="vim ~/.zshrc"
+alias szsh="source ~/.zshrc"
+
+alias sandbox="cd ~/projects/sandbox"
+alias sand="cd ~/projects/sandbox"
+alias kata="cd ~/projects/sandbox/ruby/katas"
+alias scripts="cd ~/work/scripts"
+
+# search in console
+alias gr="grep -rnw './' -e \""
+alias clip="xclip -selection cliboard"
+
+# vpn
+alias x11="x11vnc -auth guess -forever -usepw"
+
+# start hansoft from cli, work machine
+alias hansoft="cd /home/mugurel/.Hansoft/Versions/00084*/ && ./Hansoft -Url"
+
+# tmux  [TODO: make a script for those in tmuxconf]
+alias tmuxc="tmux attach -t console || tmux"
+
+# keyboard layouts alias querty="setxkbmap us"
+alias querty="setxkbmap -layout us"
+alias dvorak="setxkbmap -layout us -variant dvp -option compose:102 -option numpad:shift3 -option kpdl:semi -option keypad:atm -option caps:shift"
+alias touchpadOff="synclient TouchpadOff=1"
+alias touchpadOn="synclient TouchpadOff=0"
+
+alias steam="cd /home/mugurel/.wine/drive_c/Program\ Files\ \(x86\)/Steam/ && wine Steam.exe"
+alias tor="cd /usr/local/tor && ./tor"
+
+# work
+alias work="cd ~/work && ls"
+
+# project
+alias ticketee="cd ~/projects/ticketee && rvm use 2.0@ticketee"
+alias upm="cd ~/work/upm"
+
+alias todo="add_todo $@"
+alias catless="catless $@"
+alias dotbackup="~/projects/dotter/dotter.bash -b"
+
+alias hag="history | grep"
