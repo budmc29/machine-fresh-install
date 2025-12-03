@@ -2,7 +2,7 @@ export ZSH=~/.oh-my-zsh
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:$path"
 
 export TERM=xterm-256color
-ZSH_THEME="robbyrussell"
+ZSH_THEME="daveverwer"
 
 plugins=(fast-syntax-highlighting)
 
