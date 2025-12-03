@@ -123,17 +123,11 @@ create_resources() {
     "$HOME/projects"
   )
 
-  if [ -d "$HOME/.vim" ]; then
-    sudo chown -R "$user:$user_group" "$HOME/.vim"
-  fi
-
   for dirname in "${DIRS[@]}"; do
     mkdir -p "$dirname"
-    sudo chown -R "$user:$user_group" "$dirname"
   done
 
   touch "$HOME/.private_work_aliases"
-  sudo chown "$user:$user_group" "$HOME/.private_work_aliases"
 
   chmod -R u+rwX ~/.vim/undo ~/.vim/swap
 
@@ -148,7 +142,21 @@ prepare_dotfiles() {
     exit 1
   fi
 
-  cp -r "$dotfiles_dir"/. "$HOME"/
+  # Copy standard dotfiles to home
+  for item in "$dotfiles_dir"/.*; do
+    [ -e "$item" ] || continue
+    basename=$(basename "$item")
+    [ "$basename" = "." ] || [ "$basename" = ".." ] && continue
+    cp -r "$item" "$HOME/"
+  done
+
+  # Copy iTerm2 dynamic profiles on macOS
+  if [ "$os_type" = "macos" ] && [ -d "$dotfiles_dir/iterm2/DynamicProfiles" ]; then
+    local iterm_profiles_dir="$HOME/Library/Application Support/iTerm2/DynamicProfiles"
+    mkdir -p "$iterm_profiles_dir"
+    cp -r "$dotfiles_dir/iterm2/DynamicProfiles/"* "$iterm_profiles_dir/"
+    echo "iTerm2 profile installed"
+  fi
 
   echo "Dotfiles added"
 }
@@ -174,6 +182,17 @@ install_programs_ubuntu() {
   apt_install_if_missing wget
 }
 
+brew_cask_install_if_missing() {
+  local cask=$1
+  ensure_brew
+  if brew list --cask --versions "$cask" >/dev/null 2>&1; then
+    echo "$cask already installed"
+    return
+  fi
+
+  brew install --cask "$cask"
+}
+
 install_programs_macos() {
   brew_install_if_missing tmux
   brew_install_if_missing the_silver_searcher
@@ -182,6 +201,7 @@ install_programs_macos() {
   brew_install_if_missing zsh
   brew_install_if_missing vim
   brew_install_if_missing wget
+  brew_cask_install_if_missing iterm2
 }
 
 install_fonts() {
@@ -237,9 +257,9 @@ plugins_setup() {
   # Vundle plugin manager for vim
   local vundle_dir="$HOME/.vim/bundle/Vundle.vim"
   if [ -d "$vundle_dir/.git" ]; then
-    sudo git -C "$vundle_dir" pull --ff-only
+    git -C "$vundle_dir" pull --ff-only
   else
-    sudo git clone https://github.com/VundleVim/Vundle.vim.git "$vundle_dir"
+    git clone https://github.com/VundleVim/Vundle.vim.git "$vundle_dir"
   fi
 
   # Tmux plugins
@@ -252,7 +272,7 @@ plugins_setup() {
   chmod -R 777 ~/.tmux
 
   # Vim plugins
-  sudo vim +PluginInstall +qall
+  vim +PluginInstall +qall
 }
 
 

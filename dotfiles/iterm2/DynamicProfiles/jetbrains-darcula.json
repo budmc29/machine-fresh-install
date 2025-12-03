@@ -1,0 +1,140 @@
+{
+  "Profiles": [
+    {
+      "Name": "JetBrains Darcula",
+      "Guid": "jetbrains-darcula-profile-001",
+      "Default Bookmark": "Yes",
+      "Custom Directory": "Recycle",
+      "Working Directory": "/Users",
+      "Ansi 0 Color": {
+        "Red Component": 0.0,
+        "Green Component": 0.0,
+        "Blue Component": 0.0
+      },
+      "Ansi 1 Color": {
+        "Red Component": 0.98039215803146362,
+        "Green Component": 0.32549020648002625,
+        "Blue Component": 0.3333333432674408
+      },
+      "Ansi 2 Color": {
+        "Red Component": 0.070588238537311554,
+        "Green Component": 0.43137255311012268,
+        "Blue Component": 0.0
+      },
+      "Ansi 3 Color": {
+        "Red Component": 0.7607843279838562,
+        "Green Component": 0.76470589637756348,
+        "Blue Component": 0.0
+      },
+      "Ansi 4 Color": {
+        "Red Component": 0.27058824896812439,
+        "Green Component": 0.5058823823928833,
+        "Blue Component": 0.92156863212585449
+      },
+      "Ansi 5 Color": {
+        "Red Component": 0.98039215803146362,
+        "Green Component": 0.32941177487373352,
+        "Blue Component": 1.0
+      },
+      "Ansi 6 Color": {
+        "Red Component": 0.20000000298023224,
+        "Green Component": 0.7607843279838562,
+        "Blue Component": 0.75686275959014893
+      },
+      "Ansi 7 Color": {
+        "Red Component": 0.67843139171600342,
+        "Green Component": 0.67843139171600342,
+        "Blue Component": 0.67843139171600342
+      },
+      "Ansi 8 Color": {
+        "Red Component": 0.33333333333333331,
+        "Green Component": 0.33333333333333331,
+        "Blue Component": 0.33333333333333331
+      },
+      "Ansi 9 Color": {
+        "Red Component": 0.9843137264251709,
+        "Green Component": 0.44313725829124451,
+        "Blue Component": 0.44705882668495178
+      },
+      "Ansi 10 Color": {
+        "Red Component": 0.40392157435417175,
+        "Green Component": 1.0,
+        "Blue Component": 0.30980393290519714
+      },
+      "Ansi 11 Color": {
+        "Red Component": 1.0,
+        "Green Component": 1.0,
+        "Blue Component": 0.0
+      },
+      "Ansi 12 Color": {
+        "Red Component": 0.42745098471641541,
+        "Green Component": 0.61568629741668701,
+        "Blue Component": 0.94509804248809814
+      },
+      "Ansi 13 Color": {
+        "Red Component": 0.9843137264251709,
+        "Green Component": 0.50980395078659058,
+        "Blue Component": 1.0
+      },
+      "Ansi 14 Color": {
+        "Red Component": 0.37647059559822083,
+        "Green Component": 0.82745099067687988,
+        "Blue Component": 0.81960785388946533
+      },
+      "Ansi 15 Color": {
+        "Red Component": 0.93333333730697632,
+        "Green Component": 0.93333333730697632,
+        "Blue Component": 0.93333333730697632
+      },
+      "Background Color": {
+        "Red Component": 0.12549020349979401,
+        "Green Component": 0.12549020349979401,
+        "Blue Component": 0.12549020349979401
+      },
+      "Foreground Color": {
+        "Red Component": 0.67843139171600342,
+        "Green Component": 0.67843139171600342,
+        "Blue Component": 0.67843139171600342
+      },
+      "Bold Color": {
+        "Red Component": 0.93333333730697632,
+        "Green Component": 0.93333333730697632,
+        "Blue Component": 0.93333333730697632
+      },
+      "Cursor Color": {
+        "Red Component": 1.0,
+        "Green Component": 1.0,
+        "Blue Component": 1.0
+      },
+      "Cursor Text Color": {
+        "Red Component": 0.0,
+        "Green Component": 0.0,
+        "Blue Component": 0.0
+      },
+      "Selection Color": {
+        "Red Component": 0.10196078568696976,
+        "Green Component": 0.19607843458652496,
+        "Blue Component": 0.44705882668495178
+      },
+      "Selected Text Color": {
+        "Red Component": 0.67843139171600342,
+        "Green Component": 0.67843139171600342,
+        "Blue Component": 0.67843139171600342
+      },
+      "Normal Font": "MesloLGS-NF-Regular 13",
+      "Non Ascii Font": "MesloLGS-NF-Regular 13",
+      "Horizontal Spacing": 1.0,
+      "Vertical Spacing": 1.1,
+      "Use Bold Font": true,
+      "Use Bright Bold": true,
+      "Use Italic Font": true,
+      "ASCII Anti Aliased": true,
+      "Non-ASCII Anti Aliased": true,
+      "Scrollback Lines": 10000,
+      "Unlimited Scrollback": false,
+      "Transparency": 0.0,
+      "Blur": false
+    }
+  ]
+}
+
