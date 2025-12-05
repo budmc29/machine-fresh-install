@@ -201,6 +201,7 @@ install_programs_macos() {
   brew_install_if_missing zsh
   brew_install_if_missing vim
   brew_install_if_missing wget
+  brew_install_if_missing maccy
   brew_cask_install_if_missing iterm2
 }
 
